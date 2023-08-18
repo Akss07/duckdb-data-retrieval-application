@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Duckdb App</title>
+</head>
+<body>
+    <h1>CSV Query</h1>
+    
+    <form action="/" method="POST" enctype="multipart/form-data" hx-post="/" hx-target="#result-table">
+        <input type="file" name="csv_file" accept=".csv" required>
+        <br><br>
+        <textarea name="query" rows="5" cols="50" placeholder="Enter your query" required ></textarea>
+        <br><br>
+        <input type="submit" value="Execute Query">
+    </form>
+    
+    <h2>Query Result:</h2>
+    {% if columns and rows%}
+    <table id="result-table">
+        <thead>
+            <tr>
+                {% for column in columns %}
+                <th>{{ column }}</th>
+                {% endfor %}
+            </tr>
+        </thead>
+        <tbody>
+            {% for row in rows %}
+            <tr>
+                {% for value in row %}
+                <td>{{ value }}</td>
+                {% endfor %}
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <h3 class="errorClass">Data Not Found</h3>
+    {% endif %}
+    <div></div>
+    <script src="htmx.min.js"></script>
+</html>
